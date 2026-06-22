@@ -36,6 +36,17 @@ export async function getArticles({
   );
 }
 
+export async function getAllArticleSlugs(): Promise<string[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("articles");
+
+  const data = await strapiGet<StrapiResponse<Pick<Article, "slug">[]>>(
+    `/articles?fields=slug&pagination[pageSize]=100`,
+  );
+  return data.data.map((a) => a.slug);
+}
+
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   "use cache";
   cacheLife("days");

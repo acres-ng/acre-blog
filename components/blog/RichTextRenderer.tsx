@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import type {
   BlockNode,
@@ -60,7 +61,7 @@ function BlockRenderer({ block }: { block: BlockNode }) {
         5: "text-base font-semibold text-acre-text mt-4 mb-2",
         6: "text-sm font-semibold text-acre-text mt-4 mb-2",
       };
-      const Tag = `h${block.level}` as keyof JSX.IntrinsicElements;
+      const Tag = `h${block.level}` as React.ElementType;
       return (
         <Tag className={headingClass[block.level]}>
           {block.children.map((c, i) => renderInline(c, i))}

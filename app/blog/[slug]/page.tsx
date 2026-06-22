@@ -7,9 +7,15 @@ import { RichTextRenderer } from "@/components/blog/RichTextRenderer";
 import { ArticleSidebar } from "@/components/blog/ArticleSidebar";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import {
+  getAllArticleSlugs,
   getArticleBySlug,
   getRelatedArticles,
 } from "@/app/lib/strapi/articles";
+
+export async function generateStaticParams() {
+  const slugs = await getAllArticleSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
