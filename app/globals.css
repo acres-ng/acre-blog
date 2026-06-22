@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand colors — aligned with mobile theme.ts COLORS */
+  --color-acre-green: #1B9C5C;        /* COLORS.primary */
+  --color-acre-green-dark: #006D38;   /* COLORS.darkPrimary */
+  --color-acre-green-hover: #006D38;  /* COLORS.darkPrimary (no hover token in mobile) */
+  --color-acre-green-tag-bg: #DBEFE6; /* COLORS.faintPrimary */
+  --color-acre-text: #2D2D2D;         /* COLORS.acreBlack */
+  --color-acre-muted: #7C7D7D;        /* COLORS.acreGrayText */
+  --color-acre-hero-bg: #F5F8F4;      /* COLORS.bgColor */
+  --color-acre-newsletter-bg: #DBEFE6; /* COLORS.faintPrimary */
+
+  /* Typography */
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #2D2D2D; /* COLORS.acreBlack */
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
