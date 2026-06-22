@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
         port: process.env.NODE_ENV === "production" ? "" : "1337",
         pathname: "/uploads/**",
       },
+      {
+        protocol: 'http',
+        hostname: process.env.STRAPI_HOSTNAME ?? "localhost",
+        port: '1337',
+        pathname: '/uploads/**',
+      },
     ],
     dangerouslyAllowLocalIP: true,
   },
