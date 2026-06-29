@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { ENV } from "@/lib/env";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +14,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" aria-label="acre — home">
+          <a href={ENV.ACRE_WEBSITE_URL} aria-label="acre — home" target="_blank" rel="noopener noreferrer">
             <Image
               src="/images/logo-with-tagline.png"
               alt="acre — Helping you grow"
@@ -21,34 +23,17 @@ export function Navbar() {
               priority
               className="h-9 w-auto"
             />
-          </Link>
+          </a>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             <Link
-              href="#"
-              className="text-sm text-gray-600 hover:text-acre-green transition-colors"
-            >
-              Features
-            </Link>
-            <Link
-              href="#"
+              href={`mailto:${ENV.ACRE_EMAIL}`}
               className="text-sm text-gray-600 hover:text-acre-green transition-colors"
             >
               Contact
             </Link>
-            <Link
-              href="/"
-              className="text-sm text-gray-600 hover:text-acre-green transition-colors"
-            >
-              Our Blog
-            </Link>
-            <Link
-              href="#"
-              className="bg-acre-green-dark text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-acre-green-hover transition-colors"
-            >
-              Download App
-            </Link>
+            <Button href={`${ENV.ACRE_ONE_LINK}`}>Download App</Button>
           </div>
 
           {/* Mobile menu toggle */}
@@ -95,34 +80,20 @@ export function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-1">
           <Link
-            href="#"
-            className="block text-sm text-gray-600 py-3 hover:text-acre-green transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Features
-          </Link>
-          <Link
-            href="#"
+            href={`mailto:${ENV.ACRE_EMAIL}`}
             className="block text-sm text-gray-600 py-3 hover:text-acre-green transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Contact
           </Link>
-          <Link
-            href="/"
-            className="block text-sm text-gray-600 py-3 hover:text-acre-green transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Our Blog
-          </Link>
           <div className="pt-2">
-            <Link
-              href="#"
-              className="block w-full text-center bg-acre-green-dark text-white text-sm font-medium px-5 py-3 rounded-full hover:bg-acre-green-hover transition-colors"
+            <Button
+              href={`${ENV.ACRE_ONE_LINK}`}
+              className="block w-full text-center py-3"
               onClick={() => setIsMenuOpen(false)}
             >
               Download App
-            </Link>
+            </Button>
           </div>
         </div>
       )}

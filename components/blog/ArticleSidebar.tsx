@@ -56,7 +56,7 @@ export function ArticleSidebar({ articleUrl, title }: ArticleSidebarProps) {
         <h3 className="text-lg font-bold leading-snug mb-4">
           Join farmers learning smarter ways to manage their farm
         </h3>
-        <SubscribeForm />
+        <SubscribeForm variant="stacked"/>
       </div>
 
       {/* Share this post */}

@@ -7,8 +7,8 @@ import { FOOTER_TILES_IMAGES } from "@/lib/assets";
 
 export function NewsletterCTA() {
   return (
-    <section className="bg-acre-newsletter-bg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div className="bg-acre-newsletter-bg rounded-2xl px-8 sm:px-12 py-12 sm:py-16">
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           {/* Text + form */}
           <div className="flex-1 text-center lg:text-left">
@@ -41,5 +41,6 @@ export function NewsletterCTA() {
         </div>
       </div>
     </section>
+
   );
 }

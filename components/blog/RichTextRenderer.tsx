@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { ENV } from "@/lib/env";
 import type {
   BlockNode,
   BlockInlineNode,
@@ -103,7 +104,7 @@ function BlockRenderer({ block }: { block: BlockNode }) {
       );
 
     case "image": {
-      const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL ?? "";
+      const strapiUrl = ENV.STRAPI_URL;
       const src = block.image.url.startsWith("http")
         ? block.image.url
         : strapiUrl + block.image.url;

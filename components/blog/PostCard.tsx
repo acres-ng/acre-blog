@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/types/strapi";
+import { ENV } from "@/lib/env";
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -11,12 +12,12 @@ function formatDate(date: string) {
 }
 
 export function PostCard({ article }: { article: Article }) {
-  const coverUrl = process.env.NEXT_PUBLIC_STRAPI_URL + article.cover.url;
+  const coverUrl = ENV.STRAPI_URL + article.cover.url;
 
   return (
-    <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+    <article className="bg-white group">
       <Link href={`/blog/${article.slug}`}>
-        <div className="relative w-full aspect-video overflow-hidden">
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden">
           <Image
             src={coverUrl}
             alt={article.cover.alternativeText ?? article.title}
@@ -26,12 +27,12 @@ export function PostCard({ article }: { article: Article }) {
           />
         </div>
       </Link>
-      <div className="p-4">
+      <div className="pt-4">
         <div className="flex items-center gap-1.5 text-xs text-acre-muted mb-2">
           <span>{formatDate(article.publishedAt)}</span>
           {article.author?.name && (
             <>
-              <span>·</span>
+              <span className="mx-1">|</span>
               <span>{article.author.name}</span>
             </>
           )}

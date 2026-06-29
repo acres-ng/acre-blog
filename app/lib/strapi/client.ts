@@ -1,7 +1,11 @@
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
-const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+import { ENV } from "@/lib/env";
+
+const STRAPI_URL = ENV.STRAPI_URL;
+const STRAPI_TOKEN = ENV.STRAPI_API_TOKEN;
+const DEBUG = ENV.LOG_LEVEL === "DEBUG";
 
 if (!STRAPI_URL) throw new Error("NEXT_PUBLIC_STRAPI_URL is not set");
+
 
 export async function strapiGet<T>(
   path: string,
@@ -13,16 +17,21 @@ export async function strapiGet<T>(
     ...((options?.headers as Record<string, string>) ?? {}),
   };
 
-  const res = await fetch(`${STRAPI_URL}/api${path}`, {
-    ...options,
-    headers,
-  });
+  const url = `${STRAPI_URL}/api${path}`;
+
+  if (DEBUG) console.debug(`[strapi] GET ${url}`);
+
+  const res = await fetch(url, { ...options, headers });
 
   if (!res.ok) {
+    if (DEBUG) console.debug(`[strapi] ${res.status} ${res.statusText}`);
     throw new Error(
       `Strapi API error: ${res.status} ${res.statusText} — ${path}`,
     );
   }
 
-  return res.json() as Promise<T>;
+  const json = await res.json();
+  if (DEBUG) console.debug(`[strapi] ${res.status} ${path}`, JSON.stringify(json, null, 2));
+
+  return json as T;
 }

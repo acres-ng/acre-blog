@@ -12,7 +12,5 @@ import hero11 from "@/public/images/hero-11.jpg";
 import hero12 from "@/public/images/hero-12.jpg";
 
 export const HERO_IMAGES_LEFT = [hero1, hero2, hero3, hero4, hero5];
-
 export const HERO_IMAGES_RIGHT = [hero6, hero7, hero8, hero9, hero10];
-
 export const FOOTER_TILES_IMAGES = [hero11, hero1, hero12, hero3];

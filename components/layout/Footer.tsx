@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CopyrightYear } from "@/components/ui/CopyrightYear";
+import { ENV } from "@/lib/env";
 
 export function Footer() {
   return (
@@ -20,7 +21,7 @@ export function Footer() {
             </Link>
             <div className="flex gap-4 mt-6">
               <a
-                href="#"
+                href={ENV.SOCIAL_WHATSAPP || "#"}
                 aria-label="WhatsApp"
                 className="text-white/60 hover:text-white transition-colors"
               >
@@ -33,7 +34,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href={ENV.SOCIAL_LINKEDIN || "#"}
                 aria-label="LinkedIn"
                 className="text-white/60 hover:text-white transition-colors"
               >
@@ -46,7 +47,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href={ENV.SOCIAL_FACEBOOK || "#"}
                 aria-label="Facebook"
                 className="text-white/60 hover:text-white transition-colors"
               >
@@ -59,7 +60,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href={ENV.SOCIAL_TWITTER || "#"}
                 aria-label="X (Twitter)"
                 className="text-white/60 hover:text-white transition-colors"
               >
@@ -82,7 +83,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="#"
+                  href={ENV.ACRE_WEBSITE_URL}
                   className="text-sm text-white/75 hover:text-white transition-colors"
                 >
                   Our Mission
@@ -98,7 +99,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href={`mailto:${ENV.ACRE_EMAIL}`}
                   className="text-sm text-white/75 hover:text-white transition-colors"
                 >
                   Contact Us
@@ -115,7 +116,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="#"
+                  href={ENV.PLAYSTORE_APP_LINK || "#"}
                   className="text-sm text-white/75 hover:text-white transition-colors"
                 >
                   Get on Android
@@ -123,7 +124,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href={ENV.APP_STORE_APP_LINK || "#"}
                   className="text-sm text-white/75 hover:text-white transition-colors"
                 >
                   Get on iPhone
@@ -140,7 +141,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="#"
+                  href={ENV.ACRE_WEBSITE_URL + "/terms-of-use" || "#"}
                   className="text-sm text-white/75 hover:text-white transition-colors"
                 >
                   Terms & Conditions
@@ -148,7 +149,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href={ENV.ACRE_WEBSITE_URL + "/privacy-policy" || "#"}
                   className="text-sm text-white/75 hover:text-white transition-colors"
                 >
                   Privacy Policy

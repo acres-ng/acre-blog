@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/types/strapi";
+import { ENV } from "@/lib/env";
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -11,7 +12,7 @@ function formatDate(date: string) {
 }
 
 export function PostCardCompact({ article }: { article: Article }) {
-  const coverUrl = process.env.NEXT_PUBLIC_STRAPI_URL + article.cover.url;
+  const coverUrl = ENV.STRAPI_URL + article.cover.url;
 
   return (
     <article className="flex gap-3 group">

@@ -1,0 +1,17 @@
+export const ENV = {
+  STRAPI_URL: process.env.NEXT_PUBLIC_STRAPI_URL ?? "",
+  STRAPI_API_TOKEN: process.env.STRAPI_API_TOKEN ?? "",
+  STRAPI_HOSTNAME: process.env.STRAPI_HOSTNAME ?? "",
+  STRAPI_REVALIDATE_SECRET: process.env.STRAPI_REVALIDATE_SECRET ?? "",
+  LOG_LEVEL: process.env.LOG_LEVEL ?? "",
+  ACRE_ONE_LINK: process.env.ACRE_ONE_LINK ?? "",
+  ACRE_WEBSITE_URL: process.env.ACRE_WEBSITE_URL ?? "",
+  ACRE_EMAIL: process.env.ACRE_EMAIL ?? "",
+  PLAYSTORE_APP_LINK: process.env.PLAYSTORE_APP_LINK ?? "",
+  APP_STORE_APP_LINK: process.env.APP_STORE_APP_LINK ?? "",
+  SOCIAL_WHATSAPP: process.env.SOCIAL_WHATSAPP ?? "",
+  SOCIAL_LINKEDIN: process.env.SOCIAL_LINKEDIN ?? "",
+  SOCIAL_FACEBOOK: process.env.SOCIAL_FACEBOOK ?? "",
+  SOCIAL_TWITTER: process.env.SOCIAL_TWITTER ?? "",
+  IS_PRODUCTION: process.env.NODE_ENV === "production",
+} as const;

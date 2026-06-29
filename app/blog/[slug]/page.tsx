@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ENV } from "@/lib/env";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
@@ -39,8 +40,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     ? await getRelatedArticles(article.category.slug, slug)
     : [];
 
-  const coverUrl = process.env.NEXT_PUBLIC_STRAPI_URL + article.cover.url;
-  const articleUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}/blog/${slug}`;
+  const coverUrl = ENV.STRAPI_URL + article.cover.url;
+  const articleUrl = `${ENV.STRAPI_URL}/blog/${slug}`;
 
   return (
     <>
@@ -153,7 +154,7 @@ export async function generateMetadata({ params }: ArticlePageProps) {
       description: article.description,
       images: [
         {
-          url: process.env.NEXT_PUBLIC_STRAPI_URL + article.cover.url,
+          url: ENV.STRAPI_URL + article.cover.url,
           width: article.cover.width,
           height: article.cover.height,
           alt: article.cover.alternativeText ?? article.title,
