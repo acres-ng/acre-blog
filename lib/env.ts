@@ -4,6 +4,7 @@ export const ENV = {
   STRAPI_HOSTNAME: process.env.STRAPI_HOSTNAME ?? "",
   STRAPI_REVALIDATE_SECRET: process.env.STRAPI_REVALIDATE_SECRET ?? "",
   LOG_LEVEL: process.env.LOG_LEVEL ?? "",
+  ACRE_API_URL: process.env.NEXT_PUBLIC_ACRE_API_URL ?? "",
   ACRE_ONE_LINK: process.env.ACRE_ONE_LINK ?? "",
   ACRE_WEBSITE_URL: process.env.ACRE_WEBSITE_URL ?? "",
   ACRE_EMAIL: process.env.ACRE_EMAIL ?? "",
