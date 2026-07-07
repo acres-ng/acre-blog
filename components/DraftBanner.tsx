@@ -8,7 +8,7 @@ export async function DraftBanner() {
   return (
     <div className="bg-yellow-400 text-yellow-900 text-sm text-center px-4 py-2">
       Draft Mode active —{" "}
-      <Link href="/api/draft/disable" className="underline font-semibold">
+      <Link href="/api/preview/disable" className="underline font-semibold">
         Exit preview
       </Link>
     </div>
