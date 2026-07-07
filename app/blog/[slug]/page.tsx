@@ -10,8 +10,11 @@ import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import {
   getAllArticleSlugs,
   getArticleBySlug,
+  getArticleDraftBySlug,
   getRelatedArticles,
 } from "@/app/lib/strapi/articles";
+import { draftMode } from "next/headers";
+import { DraftBanner } from "@/components/DraftBanner";
 
 export async function generateStaticParams() {
   const slugs = await getAllArticleSlugs();
@@ -32,8 +35,11 @@ function formatDate(date: string) {
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
+  const { isEnabled: isDraft } = await draftMode();
 
-  const article = await getArticleBySlug(slug);
+  const article = isDraft
+    ? await getArticleDraftBySlug(slug)
+    : await getArticleBySlug(slug);
   if (!article) notFound();
 
   const related = article.category
@@ -45,6 +51,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
+      <DraftBanner />
       <Navbar />
       <main className="flex-1">
         {/* Page header — centered, max-width constrained */}

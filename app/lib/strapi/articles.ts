@@ -58,6 +58,16 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   return data.data[0] ?? null;
 }
 
+export async function getArticleDraftBySlug(
+  slug: string,
+): Promise<Article | null> {
+  const data = await strapiGet<StrapiResponse<Article[]>>(
+    `/articles?populate=*&filters[slug][$eq]=${slug}&status=draft`,
+    { cache: "no-store" },
+  );
+  return data.data[0] ?? null;
+}
+
 export async function getRelatedArticles(
   categorySlug: string,
   excludeSlug: string,
