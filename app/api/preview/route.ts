@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const secret = searchParams.get("secret");
   const slug = searchParams.get("slug");
-  const type = searchParams.get("type") ?? "article";
+  const status = searchParams.get("status");
 
   if (secret !== process.env.STRAPI_DRAFT_SECRET) {
     return new Response("Invalid token", { status: 401 });
@@ -17,11 +17,11 @@ export async function GET(request: NextRequest) {
   }
 
   const draft = await draftMode();
-  draft.enable();
+  if (status === "draft") {
+    draft.enable();
+  } else {
+    draft.disable();
+  }
 
-  const previewPaths: Record<string, string> = {
-    article: `/blog/${slug}`,
-  };
-
-  redirect(previewPaths[type] ?? `/${slug}`);
+  redirect(slug);
 }
