@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { RichTextRenderer } from "@/components/blog/RichTextRenderer";
+import { BlockZoneRenderer } from "@/components/blog/BlockZoneRenderer";
 import { ArticleSidebar } from "@/components/blog/ArticleSidebar";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import {
@@ -132,9 +132,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {article.description}
               </p>
 
-              {/* Rich text blocks */}
+              {/* Dynamic zone blocks */}
               {article.blocks && article.blocks.length > 0 && (
-                <RichTextRenderer blocks={article.blocks} />
+                <BlockZoneRenderer blocks={article.blocks} />
               )}
             </article>
           </div>

@@ -47,13 +47,15 @@ export async function getAllArticleSlugs(): Promise<string[]> {
   return data.data.map((a) => a.slug);
 }
 
+const ARTICLE_POPULATE = "populate=*";
+
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   "use cache";
   cacheLife("days");
   cacheTag(`article-${slug}`);
 
   const data = await strapiGet<StrapiResponse<Article[]>>(
-    `/articles?populate=*&filters[slug][$eq]=${slug}`,
+    `/articles?${ARTICLE_POPULATE}&filters[slug][$eq]=${slug}`,
   );
   return data.data[0] ?? null;
 }
@@ -62,7 +64,7 @@ export async function getArticleDraftBySlug(
   slug: string,
 ): Promise<Article | null> {
   const data = await strapiGet<StrapiResponse<Article[]>>(
-    `/articles?populate=*&filters[slug][$eq]=${slug}&status=draft`,
+    `/articles?${ARTICLE_POPULATE}&filters[slug][$eq]=${slug}&status=draft`,
     { cache: "no-store" },
   );
   return data.data[0] ?? null;

@@ -120,6 +120,38 @@ export type BlockNode =
   | BlockCode
   | BlockImage;
 
+// Strapi default dynamic zone components
+export interface SharedRichText {
+  __component: "shared.rich-text";
+  id: number;
+  body: string;
+}
+
+export interface SharedQuote {
+  __component: "shared.quote";
+  id: number;
+  title: string | null;
+  body: string;
+}
+
+export interface SharedMedia {
+  __component: "shared.media";
+  id: number;
+  file: StrapiMedia | null;
+}
+
+export interface SharedSlider {
+  __component: "shared.slider";
+  id: number;
+  files: StrapiMedia[] | null;
+}
+
+export type DynamicZoneBlock =
+  | SharedRichText
+  | SharedQuote
+  | SharedMedia
+  | SharedSlider;
+
 export interface Article {
   id: number;
   documentId: string;
@@ -129,7 +161,7 @@ export interface Article {
   cover: StrapiMedia;
   author: Author;
   category: Category;
-  blocks: BlockNode[] | null;
+  blocks: DynamicZoneBlock[] | null;
   publishedAt: string;
   createdAt: string;
   updatedAt: string;
