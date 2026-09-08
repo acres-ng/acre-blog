@@ -5,14 +5,14 @@ import { getArticles } from "@/app/lib/strapi/articles";
 import { getCategories } from "@/app/lib/strapi/categories";
 
 interface BrowseSectionProps {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; q?: string }>;
 }
 
 export async function BrowseSection({ searchParams }: BrowseSectionProps) {
-  const { category } = await searchParams;
+  const { category, q } = await searchParams;
 
   const [articlesData, categories] = await Promise.all([
-    getArticles({ page: 1, pageSize: 6, category }),
+    getArticles({ page: 1, pageSize: 6, category, q }),
     getCategories(),
   ]);
 
@@ -28,10 +28,11 @@ export async function BrowseSection({ searchParams }: BrowseSectionProps) {
         </Suspense>
       </div>
       <PostGrid
-        key={category ?? "all"}
+        key={`${category ?? "all"}:${q ?? ""}`}
         initialArticles={articlesData.data}
         totalPages={articlesData.meta.pagination.pageCount}
         category={category}
+        q={q}
       />
     </section>
   );

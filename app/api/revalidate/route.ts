@@ -24,7 +24,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Invalid JSON" }, { status: 400 });
   }
 
-  const { model, entry } = body;
+  const { event, model, entry } = body;
+
+  // Strapi admin's "Trigger" test button sends { event: "trigger-test" }
+  // with no model/entry — treat as a connectivity check, not an error.
+  if (event === "trigger-test") {
+    return NextResponse.json({ revalidated: false, test: true });
+  }
 
   if (!model) {
     return NextResponse.json(

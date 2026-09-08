@@ -47,7 +47,8 @@ export interface Category {
   id: number;
   documentId: string;
   name: string;
-  slug: string;
+  // Strapi allows publishing a category without a slug — callers must handle null.
+  slug: string | null;
 }
 
 // Strapi v5 Blocks (rich text as structured JSON)

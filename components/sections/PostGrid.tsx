@@ -9,12 +9,14 @@ interface PostGridProps {
   initialArticles: Article[];
   totalPages: number;
   category?: string;
+  q?: string;
 }
 
 export function PostGrid({
   initialArticles,
   totalPages,
   category,
+  q,
 }: PostGridProps) {
   const [articles, setArticles] = useState<Article[]>(initialArticles);
   const [page, setPage] = useState(1);
@@ -27,14 +29,14 @@ export function PostGrid({
     setLoading(true);
     try {
       const nextPage = page + 1;
-      const result = await loadMoreArticles(nextPage, category);
+      const result = await loadMoreArticles(nextPage, category, q);
       setArticles((prev) => [...prev, ...result.data]);
       setPage(nextPage);
       setHasMore(nextPage < result.meta.pagination.pageCount);
     } finally {
       setLoading(false);
     }
-  }, [loading, hasMore, page, category]);
+  }, [loading, hasMore, page, category, q]);
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -54,7 +56,9 @@ export function PostGrid({
   if (!articles.length) {
     return (
       <p className="text-center text-acre-muted py-12">
-        No posts found in this category.
+        {q
+          ? `No posts match “${q}”${category ? " in this category" : ""}.`
+          : "No posts found in this category."}
       </p>
     );
   }

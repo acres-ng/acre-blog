@@ -8,7 +8,7 @@ import { NewsletterCTA } from "@/components/sections/NewsletterCTA";
 import { getLatestArticles } from "@/app/lib/strapi/articles";
 
 interface HomePageProps {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; q?: string }>;
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ENV } from "@/lib/env";
+import { categoryParam } from "@/lib/category";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
@@ -43,7 +44,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   if (!article) notFound();
 
   const related = article.category
-    ? await getRelatedArticles(article.category.slug, slug)
+    ? await getRelatedArticles(categoryParam(article.category), slug)
     : [];
 
   const coverUrl = ENV.STRAPI_URL + article.cover.url;
