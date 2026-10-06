@@ -18,6 +18,21 @@ const SOCIAL_ORDER: SocialKey[] = [
   "tiktok",
 ];
 
+/**
+ * Kept deliberately in step with the web app's footer
+ * (acre-frontend/src/components/modules/landingpage/Footer.tsx): same columns,
+ * same headings, same link and social styling, same copyright rule. The two
+ * sit on the same domain in a reader's mind, and drifting apart reads as two
+ * different companies.
+ *
+ * What differs is forced by the framework, not by taste: this one is a server
+ * component reading app-settings at build/revalidate time through getSiteLinks,
+ * where the web app fetches on the client through useAppSettings.
+ */
+const LINK_CLASS =
+  "inline-block py-1 text-card-body text-acre-gray-border transition-colors hover:text-white";
+const HEADING_CLASS = "text-card-title font-semibold text-white";
+
 export async function Footer() {
   const links = await getSiteLinks();
 
@@ -28,10 +43,10 @@ export async function Footer() {
 
   return (
     <footer className="bg-acre-green-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-section pb-8">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
           {/* Brand + social */}
-          <div className="col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" aria-label="acre — home">
               <Image
                 src="/images/logo-white.png"
@@ -41,8 +56,14 @@ export async function Footer() {
                 className="h-9 w-auto"
               />
             </Link>
+            {links.companyAddress && (
+              <address className="mt-8 max-w-[22rem] whitespace-pre-line text-card-body not-italic leading-relaxed text-acre-gray-border">
+                {links.companyAddress}
+              </address>
+            )}
+
             {socials.length > 0 && (
-              <div className="flex flex-wrap gap-4 mt-6">
+              <div className="flex flex-wrap items-center gap-4 mt-8">
                 {socials.map(({ key, href }) => (
                   <a
                     key={key}
@@ -50,7 +71,7 @@ export async function Footer() {
                     aria-label={SOCIAL_LABELS[key]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/60 hover:text-white transition-colors"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-acre-green-dark transition-colors hover:bg-acre-green-tag-bg"
                   >
                     <SocialIcon name={key} />
                   </a>
@@ -61,7 +82,7 @@ export async function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">
+            <h3 className={`${HEADING_CLASS} mb-5`}>
               Company
             </h3>
             <ul className="space-y-3">
@@ -69,7 +90,7 @@ export async function Footer() {
                 <li>
                   <Link
                     href={links.websiteUrl}
-                    className="text-sm text-white/75 hover:text-white transition-colors"
+                    className={LINK_CLASS}
                   >
                     Our Mission
                   </Link>
@@ -78,7 +99,7 @@ export async function Footer() {
               <li>
                 <Link
                   href="/"
-                  className="text-sm text-white/75 hover:text-white transition-colors"
+                  className={LINK_CLASS}
                 >
                   Blog
                 </Link>
@@ -87,7 +108,7 @@ export async function Footer() {
                 <li>
                   <Link
                     href={`mailto:${links.supportEmail}`}
-                    className="text-sm text-white/75 hover:text-white transition-colors"
+                    className={LINK_CLASS}
                   >
                     Contact Us
                   </Link>
@@ -97,7 +118,7 @@ export async function Footer() {
                 <li>
                   <Link
                     href={`tel:${links.supportPhone.replace(/\s+/g, "")}`}
-                    className="text-sm text-white/75 hover:text-white transition-colors"
+                    className={LINK_CLASS}
                   >
                     {links.supportPhone}
                   </Link>
@@ -109,7 +130,7 @@ export async function Footer() {
           {/* Download App */}
           {(links.app.playStore || links.app.appStore || links.app.oneLink) && (
             <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">
+              <h3 className={`${HEADING_CLASS} mb-5`}>
                 Download App
               </h3>
               <ul className="space-y-3">
@@ -117,7 +138,7 @@ export async function Footer() {
                   <li>
                     <Link
                       href={links.app.playStore}
-                      className="text-sm text-white/75 hover:text-white transition-colors"
+                      className={LINK_CLASS}
                     >
                       Get on Android
                     </Link>
@@ -127,7 +148,7 @@ export async function Footer() {
                   <li>
                     <Link
                       href={links.app.appStore}
-                      className="text-sm text-white/75 hover:text-white transition-colors"
+                      className={LINK_CLASS}
                     >
                       Get on iPhone
                     </Link>
@@ -137,7 +158,7 @@ export async function Footer() {
                   <li>
                     <Link
                       href={links.app.oneLink}
-                      className="text-sm text-white/75 hover:text-white transition-colors"
+                      className={LINK_CLASS}
                     >
                       Get the App
                     </Link>
@@ -148,9 +169,9 @@ export async function Footer() {
           )}
 
           {/* Legal */}
-          {(links.legal.termsOfService || links.legal.privacyPolicy) && (
+          {(links.legal.termsOfService || links.legal.privacyPolicy || links.websiteUrl) && (
             <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">
+              <h3 className={`${HEADING_CLASS} mb-5`}>
                 Legal
               </h3>
               <ul className="space-y-3">
@@ -158,7 +179,7 @@ export async function Footer() {
                   <li>
                     <Link
                       href={links.legal.termsOfService}
-                      className="text-sm text-white/75 hover:text-white transition-colors"
+                      className={LINK_CLASS}
                     >
                       Terms &amp; Conditions
                     </Link>
@@ -168,9 +189,18 @@ export async function Footer() {
                   <li>
                     <Link
                       href={links.legal.privacyPolicy}
-                      className="text-sm text-white/75 hover:text-white transition-colors"
+                      className={LINK_CLASS}
                     >
                       Privacy Policy
+                    </Link>
+                  </li>
+                )}
+                {/* The privacy policy's third-party-links section. It lives on
+                    the web app, not here, so this always points out. */}
+                {links.websiteUrl && (
+                  <li>
+                    <Link href={`${links.websiteUrl}/links`} className={LINK_CLASS}>
+                      Links to Other Websites
                     </Link>
                   </li>
                 )}
@@ -179,8 +209,8 @@ export async function Footer() {
           )}
         </div>
 
-        <div className="mt-12 pt-6 border-t border-white/10">
-          <p className="text-xs text-white/35">
+        <div className="mt-14 flex items-center gap-1 border-t border-white/15 pt-6">
+          <p className="text-micro font-light text-acre-gray-border">
             © <CopyrightYear /> All Rights Reserved
           </p>
         </div>

@@ -11,8 +11,23 @@
   --color-acre-hero-bg: #F5F8F4;      /* COLORS.bgColor */
   --color-acre-newsletter-bg: #DBEFE6; /* COLORS.faintPrimary */
 
+  /* Shared with acre-frontend's tailwind.config.js so the footer here and the
+     one in the web app can use the same utility names and stay comparable.
+     Values copied from that config, not re-derived. */
+  --color-acre-gray-border: #E4E5E6;
+
   /* Typography */
   --font-sans: var(--font-poppins), system-ui, sans-serif;
+
+  --text-card-title: 1.25rem;
+  --text-card-title--line-height: 1.4;
+  --text-card-title--letter-spacing: -0.01em;
+  --text-card-body: 0.875rem;
+  --text-card-body--line-height: 1.45;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.667;
+
+  --spacing-section: 6rem;
 }
 
 :root {
