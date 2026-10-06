@@ -124,6 +124,16 @@ export async function Footer() {
                   </Link>
                 </li>
               )}
+              {/* The link tree — download links, the farmer community, and the
+                  other places Acre lives. It is a page on the web app, so this
+                  always points out. */}
+              {links.websiteUrl && (
+                <li>
+                  <Link href={`${links.websiteUrl}/links`} className={LINK_CLASS}>
+                    Link Tree
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -169,7 +179,7 @@ export async function Footer() {
           )}
 
           {/* Legal */}
-          {(links.legal.termsOfService || links.legal.privacyPolicy || links.websiteUrl) && (
+          {(links.legal.termsOfService || links.legal.privacyPolicy) && (
             <div>
               <h3 className={`${HEADING_CLASS} mb-5`}>
                 Legal
@@ -192,15 +202,6 @@ export async function Footer() {
                       className={LINK_CLASS}
                     >
                       Privacy Policy
-                    </Link>
-                  </li>
-                )}
-                {/* The privacy policy's third-party-links section. It lives on
-                    the web app, not here, so this always points out. */}
-                {links.websiteUrl && (
-                  <li>
-                    <Link href={`${links.websiteUrl}/links`} className={LINK_CLASS}>
-                      Links to Other Websites
                     </Link>
                   </li>
                 )}
