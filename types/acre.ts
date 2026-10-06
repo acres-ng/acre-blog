@@ -32,6 +32,9 @@ export interface AppSettings {
   logo_url?: string | null;
   support_email?: string | null;
   support_phone?: string | null;
+  /** Freeform postal address, rendered whole. Nullable, and absent on
+      deployments predating AC-1053. */
+  company_address?: string | null;
   social_links?: AppSettingsSocialLinks | null;
   app_links?: AppSettingsAppLinks | null;
   legal_links?: AppSettingsLegalLinks | null;

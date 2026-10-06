@@ -8,6 +8,7 @@ export interface SiteLinks {
   logoUrl: string | null;
   supportEmail: string | null;
   supportPhone: string | null;
+  companyAddress: string | null;
   websiteUrl: string;
   social: {
     whatsapp: string | null;
@@ -69,6 +70,7 @@ export async function getSiteLinks(): Promise<SiteLinks> {
     logoUrl: pick(settings?.logo_url),
     supportEmail: pick(settings?.support_email, ENV.ACRE_EMAIL),
     supportPhone: pick(settings?.support_phone),
+    companyAddress: pick(settings?.company_address),
     websiteUrl: website,
     social: {
       whatsapp: pick(social?.whatsapp, ENV.SOCIAL_WHATSAPP),
