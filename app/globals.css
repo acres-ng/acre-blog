@@ -11,10 +11,14 @@
   --color-acre-hero-bg: #F5F8F4;      /* COLORS.bgColor */
   --color-acre-newsletter-bg: #DBEFE6; /* COLORS.faintPrimary */
 
-  /* Shared with acre-frontend's tailwind.config.js so the footer here and the
-     one in the web app can use the same utility names and stay comparable.
-     Values copied from that config, not re-derived. */
+  /* Shared with acre-frontend's tailwind.config.js so the navbar and footer
+     here and the ones in the web app can use the same utility names and stay
+     comparable. Values copied from that config, not re-derived. */
   --color-acre-gray-border: #E4E5E6;
+  --color-acre-green-normal: #1B9C5C;
+  --color-acre-green-lighter: #CCE6DA;
+  --color-acre-black: #000000;
+  --color-acre-black-text: #2D2D2D;
 
   /* Typography */
   --font-sans: var(--font-poppins), system-ui, sans-serif;
@@ -28,6 +32,12 @@
   --text-micro--line-height: 1.667;
 
   --spacing-section: 6rem;
+
+  /* Also from acre-frontend's config: the house easing curves. Its hover and
+     reveal durations (200ms / 520ms) are written as arbitrary values at the
+     call sites — Tailwind v4 has no theme namespace for transition-duration. */
+  --ease-acre: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-acre-out: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 :root {
@@ -38,6 +48,15 @@
 body {
   color: var(--foreground);
   background: var(--background);
+}
+
+/* The web app's page gutter (acre-frontend/src/styles/index.css), so the
+   navbar and footer line up with the same edges on both properties. */
+@utility acre-container {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 6.944vw, 6.25rem);
 }
 
 /* Scrollbar hide utility */
