@@ -7,7 +7,11 @@ export const ENV = {
   LOG_LEVEL: process.env.LOG_LEVEL ?? "",
   ACRE_API_URL: process.env.NEXT_PUBLIC_ACRE_API_URL ?? "",
   ACRE_ONE_LINK: process.env.ACRE_ONE_LINK ?? "",
-  ACRE_WEBSITE_URL: process.env.ACRE_WEBSITE_URL ?? "",
+  // Defaulted rather than left empty: the navbar and footer build every
+  // cross-property link from this, so an unset value turns them into
+  // relative URLs that resolve against the blog and 404. `||` not `??`,
+  // because an empty string reaches here as often as an unset var.
+  ACRE_WEBSITE_URL: process.env.ACRE_WEBSITE_URL || "https://www.acre-life.com",
   ACRE_EMAIL: process.env.ACRE_EMAIL ?? "",
   PLAYSTORE_APP_LINK: process.env.PLAYSTORE_APP_LINK ?? "",
   APP_STORE_APP_LINK: process.env.APP_STORE_APP_LINK ?? "",
