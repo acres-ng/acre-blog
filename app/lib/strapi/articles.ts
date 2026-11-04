@@ -89,7 +89,9 @@ const ARTICLE_POPULATE = "populate=*";
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   "use cache";
   cacheLife("days");
-  cacheTag(`article-${slug}`);
+  // "articles" as well: the page shows the populated category and author,
+  // which change without the article changing (see api/revalidate).
+  cacheTag("articles", `article-${slug}`);
 
   const data = await strapiGet<StrapiResponse<Article[]>>(
     `/articles?${ARTICLE_POPULATE}&filters[slug][$eq]=${encodeURIComponent(slug)}`,

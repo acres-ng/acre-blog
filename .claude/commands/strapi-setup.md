@@ -80,8 +80,8 @@ Check that these vars exist (do NOT expose values):
 ```env
 NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 STRAPI_API_TOKEN=
-STRAPI_REVALIDATE_SECRET=
-STRAPI_DRAFT_SECRET=
+STRAPI_REVALIDATE_SECRET=   # same name and value in acre-cms .env
+STRAPI_PREVIEW_SECRET=      # same name and value in acre-cms .env
 STRAPI_HOSTNAME=localhost
 ```
 

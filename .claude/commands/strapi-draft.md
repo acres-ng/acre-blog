@@ -28,6 +28,8 @@ Create `app/api/draft/route.ts`:
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NextRequest } from 'next/server'
+import { ENV } from '@/lib/env'
+import { secretMatches } from '@/lib/secrets'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
@@ -35,7 +37,9 @@ export async function GET(request: NextRequest) {
   const slug = searchParams.get('slug')
   const type = searchParams.get('type') ?? 'article'
 
-  if (secret !== process.env.STRAPI_DRAFT_SECRET) {
+  // Never `secret !== process.env.X`: an unset var would let `?secret=` through
+  // once it is defaulted to "". secretMatches rejects empty secrets.
+  if (!secretMatches(secret, ENV.STRAPI_PREVIEW_SECRET)) {
     return new Response('Invalid token', { status: 401 })
   }
 
@@ -140,13 +144,14 @@ Add `<DraftBanner />` to `app/layout.tsx`.
 ## Step 5: Add env var
 
 ```env
-STRAPI_DRAFT_SECRET=choose-a-long-random-secret
+# Same name and value as in acre-cms .env (it builds the preview URL).
+STRAPI_PREVIEW_SECRET=choose-a-long-random-secret
 ```
 
 ## Step 6: Configure Strapi preview URL
 
 In Strapi admin, for each content type:
 1. Content-Types Builder → [your type] → Edit → Preview URL
-2. Set to: `https://your-domain.com/api/draft?secret={STRAPI_DRAFT_SECRET}&slug={slug}&type=article`
+2. Set to: `https://your-domain.com/api/draft?secret={STRAPI_PREVIEW_SECRET}&slug={slug}&type=article`
 
 Or configure in `config/plugins.ts` on the Strapi side for programmatic setup.

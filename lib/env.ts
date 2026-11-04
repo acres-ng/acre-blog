@@ -2,8 +2,13 @@ export const ENV = {
   STRAPI_URL: process.env.NEXT_PUBLIC_STRAPI_URL ?? "",
   STRAPI_API_TOKEN: process.env.STRAPI_API_TOKEN ?? "",
   STRAPI_HOSTNAME: process.env.STRAPI_HOSTNAME ?? "",
+  // Both secrets are shared with acre-cms and must hold the same value there
+  // (AC-1029). Empty means unset: lib/secrets.ts then rejects every request.
   STRAPI_REVALIDATE_SECRET: process.env.STRAPI_REVALIDATE_SECRET ?? "",
-  STRAPI_DRAFT_SECRET: process.env.STRAPI_DRAFT_SECRET ?? "",
+  // STRAPI_DRAFT_SECRET is the old name, read until every deployment has the
+  // new one. Remove the fallback once Vercel has STRAPI_PREVIEW_SECRET.
+  STRAPI_PREVIEW_SECRET:
+    process.env.STRAPI_PREVIEW_SECRET || process.env.STRAPI_DRAFT_SECRET || "",
   LOG_LEVEL: process.env.LOG_LEVEL ?? "",
   ACRE_API_URL: process.env.NEXT_PUBLIC_ACRE_API_URL ?? "",
   ACRE_ONE_LINK: process.env.ACRE_ONE_LINK ?? "",

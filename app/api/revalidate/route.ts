@@ -1,15 +1,30 @@
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { ENV } from "@/lib/env";
+import { secretMatches } from "@/lib/secrets";
 
-// Map Strapi model (singular content-type UID) names to cache tags used in this app.
+/*
+ * Strapi model (singular content-type UID) -> cache tags to bust.
+ *
+ * The webhook that calls this route is created by acre-cms on boot
+ * (src/index.ts, AC-1028) from BLOG_REVALIDATE_URL and the same
+ * STRAPI_REVALIDATE_SECRET as here.
+ *
+ * Articles are fetched with their category and author populated, so a
+ * category or author change has to bust "articles" too, which every article
+ * fetch carries (including the single-article page). `${model}-${slug}` is
+ * busted as well: article-<slug> and category-<slug>.
+ */
 const MODEL_TAG_MAP: Record<string, string[]> = {
   article: ["articles"],
-  category: ["categories"],
+  category: ["categories", "articles"],
+  author: ["articles"],
 };
 
 export async function POST(request: NextRequest) {
-  const secret = request.headers.get("Authorization");
-  if (secret !== `Bearer ${process.env.STRAPI_REVALIDATE_SECRET}`) {
+  const header = request.headers.get("Authorization") ?? "";
+  const secret = header.startsWith("Bearer ") ? header.slice(7) : null;
+  if (!secretMatches(secret, ENV.STRAPI_REVALIDATE_SECRET)) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
