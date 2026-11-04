@@ -27,6 +27,8 @@ Create `app/api/revalidate/route.ts`:
 ```ts
 import { revalidateTag } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
+import { ENV } from '@/lib/env'
+import { secretMatches } from '@/lib/secrets'
 
 // Map Strapi model names to cache tags used in this app.
 // Add entries as you add new content types.
@@ -38,8 +40,11 @@ const MODEL_TAG_MAP: Record<string, string[]> = {
 
 export async function POST(request: NextRequest) {
   // Validate the secret token
-  const secret = request.headers.get('Authorization')
-  if (secret !== `Bearer ${process.env.STRAPI_REVALIDATE_SECRET}`) {
+  // Never compare against `Bearer ${process.env.X}`: with X unset, the header
+  // "Bearer undefined" would pass. secretMatches rejects empty secrets.
+  const header = request.headers.get('Authorization') ?? ''
+  const secret = header.startsWith('Bearer ') ? header.slice(7) : null
+  if (!secretMatches(secret, ENV.STRAPI_REVALIDATE_SECRET)) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
@@ -85,7 +90,12 @@ STRAPI_REVALIDATE_SECRET=choose-a-long-random-secret
 
 ## Step 4: Register webhook in Strapi
 
-In Strapi admin:
+For acre-cms this is already done in code: `src/index.ts` creates or updates
+the "Blog revalidate" webhook on every boot from `BLOG_REVALIDATE_URL` and
+`STRAPI_REVALIDATE_SECRET` (AC-1028). Add a model to its event list there,
+not in the admin UI, or the next boot undoes the edit.
+
+For any other Strapi, in the admin:
 1. Settings → Webhooks → Add new webhook
 2. Name: `Next.js Revalidate`
 3. URL: `https://your-domain.com/api/revalidate`  
